@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <!-- 我们已经学过 父组件向子组件传值  通过props 接收父组件传过来的值
+         现在我们讨论 父组件传到子组件的值，子组件通过props接手之后 是否能够向父组件传过来的数据中再增加一条数据
+         答案是可以的
+         但是 注意，这里的增加并不是直接操作的父组件的内容（父组件的内容是不会发生改变的），而是在自己的组件中 向其里面添加数据
+             换句话说，就是子组件克隆了父组件的属性，克隆之后对属性的操作 并不会影响父组件的属性
+             也就是 props 是单向数据流
+
+         如果我们子组件想要直接操作父组件的内容 我们需要 子组件通过自定义事件向父组件传递信息   
+           然后 父组件监听子组件的事件 
+    -->
+    <div class="app">
+        <div :style='{fontSize:size+"px"}'>{{pmsg}}</div>
+        <div>{{size}}</div>
+        <menu-item :arr="parr" @large-text="handle($event)"></menu-item>
+    </div>
+    <script>
+        /**
+         * 子组件通过自定义事件向父组件传递参数
+         * $emit("自定义函数名",参数)  子组件向父组件中传递参数  
+            本案例中  向父组件中传递了一个函数名为 large-text，参数为5
+         * 
+         * 父组件监听子组件的事件
+         * 使用$event 来接受参数
+         * 子组件定义的函数名='父组件函数名称($event）'
+         *     this.$emit 接受的就是子组件传过来的参数 5
+         *  然后 父组件接收这个参数之后 调用了handle这个函数 改变了父组件的 size值
+         */
+        Vue.component('menu-item', {
+            // 接收父组件 传过来的属性
+            props: ['arr'],
+            template: `<div>
+                          <ul>
+                            <li v-for="item of arr">{{item}}</li>
+                          </ul>
+                          <button @click="arr.push('lemon')">点击</button>
+                          <button @click="$emit('large-text',5)">扩大父组件的字体大小</button>
+
+                     </div>`
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                pmsg: '父组件的内容',
+                parr: ['apple', 'pear', 'banana'],
+                size: 12
+            },
+            methods: {
+                handle: function (val) {
+                    this.size += 5;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

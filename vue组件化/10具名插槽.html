@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div class="app">
+        <base-layout>
+            <!-- 这样写的话 他会自动匹配 哪一个是头部 -->
+            <p slot="header">头部标题信息</p>
+            <p>主要内容1</p>
+            <p>主要内容2</p>
+            <p slot="footer">尾部信息</p>
+        </base-layout>
+        <!-- 这样写的话 就是在底部插入信息 头部和中间的 都只有标签 没有内容 -->
+        <base-layout name="footer">像底部插入的信息</base-layout>
+
+        <!-- 另一种 略微复杂的写法 引入template便签-->
+        <base-layout>
+            <!-- 便签放进 template中 编译之后 并没有template便签
+                template这个便签 在这里起到的作用就是 临时包裹一下这些数据 因为他们是一个整体
+            -->
+            <template slot="header">
+                <h1>这是头部</h1>
+                <p>头部标题信息1</p>
+                <p>头部标题信息2</p>
+                <p>头部标题信息3</p>
+            </template>
+            <!-- 这里的书写顺序并不会影响  因为他是匹配组件中的slot -->
+
+            <template slot="footer">
+                <h1>这是尾部</h1>
+                <p>尾部标题信息1</p>
+                <p>尾部标题信息2</p>
+                <p>尾部标题信息3</p>
+            </template>
+            <template>
+                <h1>这是中间主体</h1>
+                <p>主要内容1</p>
+                <p>主要内容2</p>
+            </template>
+        </base-layout>
+    </div>
+
+    <script>
+        Vue.component('base-layout', {
+            template: `
+                    <div>
+                       <header>
+                        <slot name="header"></slot>
+                        </header> 
+                        <main>
+                            <slot></slot>
+                         </main>
+                       <footer>
+                        <slot name="footer"></slot>
+                        </footer>
+                    </div>
+            `
+        })
+        const vm = new Vue({
+            el: '.app',
+
+        })
+    </script>
+</body>
+
+</html>

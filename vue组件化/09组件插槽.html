@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div class="app">
+        <a-lab>这是向组件中插入的信息A</a-lab>
+        <a-lab>这是向组件中插入的信息B</a-lab>
+        <!-- 如果在使用的过程中 没有传递内容 那么就会使用默认的
+             如果传递了，则使用传递的值
+        -->
+        <a-lab></a-lab>
+
+    </div>
+    <script>
+        // 定义一个自组件
+        Vue.component('a-lab', {
+            template: ` <div>
+                             <strong>Error</strong>
+                             <slot>这是组件本身的默认内容</slot>
+                       </div>
+                    `
+        })
+        const vue = new Vue({
+            el: '.app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

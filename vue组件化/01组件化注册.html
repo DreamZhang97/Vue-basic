@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+</head>
+<!-- 组件化注册 -->
+
+<body>
+    <div class="app">
+        <!-- 这里面使用了 三个组件 这三个组件都是独立的个体  相互不影响 -->
+
+        <button-count></button-count>
+        <button-count></button-count>
+        <button-count></button-count>
+
+    </div>
+    <script>
+        // 注册 自定义的组件
+        Vue.component('button-count', {
+            // 要求 这个属性data 必须是函数 
+            // 区分 下方的vue的data属性，他是个对象
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            // template: '<button @click="count++">点击了{{count}}次</button>',
+            // 组件模板中的元素 必须是单个根元素
+            // 如果按照下方这样写,它相当于是两个兄弟节点  是不允许的
+            // 报错 template should contain exactly one root element  这句话翻译过来就是必须含有一个根元素
+            // 解决这个问题 ,就是需要在外层 添加一个div
+            // template: '<button @click="count++">点击了{{count}}次</button> <button>123</button>',
+            // 注意一点,加单引号的  不允许换行操作
+            // template: '<div><button @click="count++">点击了{{count}}次</button> <button @click="count++">测试点击{{count}}</button></button></div>',
+            // 如果我们想要 让拼接的代码 看起来美观,我们就需要使用 模板字符串 ``
+            template: `<div>
+                         <button @click="count++">点击了{{count}}次</button> 
+                         <button @click="count++">测试点击{{count}}</button>
+                        </div>`,
+
+            methods: {
+                handle: function () {
+                    this.count++;
+                }
+            }
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {}
+        })
+    </script>
+</body>
+
+</html>

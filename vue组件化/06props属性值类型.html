@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div class="app">
+        <!-- 如果这样写 就是单纯的向title传入值 pflag 
+            输出结果为 pflag
+            这种写法  num的类型就为number
+            你如果想要其保持原始类型，你就加上：
+            在如下面的bool 如果加上：那么他的类型就是boolean 即使加上“”也不影响
+        -->
+        <!-- <comp title="pflag" :num="12" :bool="true"></comp> -->
+        <!-- 如果这样写 就是绑定了父级的pflag 变量
+           这个输出的内容为 这是父组件的flag'
+            如果我们直接写 num=12  那么打印他的类型 就为string
+            进行运算时 ，就是字符串拼接
+        -->
+        <comp :title="pflag" num="12" bool="true" :arr="parr" :obj="pobj"></comp>
+
+
+    </div>
+    <script>
+        Vue.component('comp', {
+            props: ['title', 'num', 'bool', 'arr', 'obj'],
+            template: `<div>
+                            <div>{{title}}</div>
+                            <div>{{12+num}}</div>
+                            <div>{{typeof num}}</div>
+                            <div>{{bool}}</div>
+                            <div>{{typeof bool}}</div>
+                             <div>
+                               <ul>
+                                  <li v-for="item of arr">{{item}}</li>
+                                </ul> 
+                             </div>
+                             <div>
+                            <span>{{obj.uname}}</span>  
+                            <span>{{obj.age}}</span>    
+                            </div>
+                            <div>----------------------</div>
+                       </div>`
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                pmsg: '这是父组件的msg',
+                pflag: '这是父组件的flag',
+                parr: ['apple', 'pear', 'orange'],
+                pobj: {
+                    uname: '李四',
+                    age: 18
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

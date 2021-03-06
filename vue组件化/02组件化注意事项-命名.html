@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div class="app">
+        <button-count></button-count>
+        <!-- 驼峰式的不支持 在页面中直接引用 -->
+        <!-- <HelloWorld></HelloWorld> -->
+
+        <!-- 短横线式的 支持在页面中直接引用 -->
+        <new-ul></new-ul>
+    </div>
+    <script>
+        /**
+         * 命名方式 
+         * 1.驼峰式  每一个字母都是首字母大写
+         *    这种写法不支持在 页面中直接使用这个组件,如果使用 必须在其他的组件中引入使用
+         * 2.短横线式
+         */
+        Vue.component('button-count', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: `<div>
+                         <button @click="count++">点击了{{count}}次</button> 
+                         <button @click="count++">测试点击{{count}}</button>
+                        <HelloWorld></HelloWorld>
+                        </div>`,
+
+            methods: {
+                handle: function () {
+                    this.count++;
+                }
+            }
+        })
+        Vue.component('new-ul', {
+            data: function () {
+                return {
+                    msg: '自定义ul'
+                }
+            },
+            template: `<ul>
+                        <li>{{msg}}</li>
+                        <li>{{msg}}</li>
+                        <li>{{msg}}</li>
+                        </ul>`
+        });
+        Vue.component('HelloWorld', {
+            data: function () {
+                return {
+                    msg: 'HelloWorld'
+                }
+            },
+            template: `<div>{{msg}}</div>`
+        });
+
+        const vm = new Vue({
+            el: '.app',
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

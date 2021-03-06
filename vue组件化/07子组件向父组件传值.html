@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div class="app">
+        <div :style='{fontSize:size+"px"}'>{{pmsg}}</div>
+        <menu-item :arr="parr" @large-text="handle"></menu-item>
+    </div>
+    <script>
+        /**
+         * 子组件 向父组件传值 基本用法
+         * props 传递数据原则：单向数据流
+         */
+        Vue.component('menu-item', {
+            props: ['arr'],
+            template: `<div>
+                          <ul>
+                            <li v-for="item of arr">{{item}}</li>
+                          </ul>
+                          <button @click="arr.push('lemon')">点击</button>
+                          <button @click="$emit('large-text')">扩大父组件的字体大小</button>
+
+                     </div>`
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                pmsg: '父组件的内容',
+                parr: ['apple', 'pear', 'banana'],
+                size: 12
+            },
+            methods: {
+                handle: function () {
+                    this.size += 5;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

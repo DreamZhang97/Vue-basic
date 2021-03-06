@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <!-- 父组件 向子组件传值 -->
+    <div class="app">
+        <div>{{pmsg}}</div>
+        <!-- 这种是静态的 写死的属性 -->
+        <menu-item title="这是父组件的"></menu-item>
+        <!-- v-bind 动态绑定属性值  title的值 是父组件Ptitle -->
+        <menu-item v-bind:title="ptitle" content="111"></menu-item>
+    </div>
+    <script>
+        // 这个是子组件  
+        // 接收值的话  使用props
+        Vue.component('menu-item', {
+            // 接收父组件传递过来的属性值  均写在 props种
+            props: ['title', 'content'],
+            data: function () {
+                return {
+                    msg: '这是子组件自身内容'
+                }
+            },
+            // title 就是来自父组件的内容  子组件menu-item 接收来自父组件的内容并返回给前台
+            template: '<div>{{msg+"------"+title+"-----"+content}}</div>'
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                pmsg: "父组件中的内容",
+                ptitle: '动态绑定属性'
+            }
+        })
+    </script>
+</body>
+
+</html>

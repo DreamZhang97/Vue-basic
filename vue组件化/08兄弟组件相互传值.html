@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+<!-- 兄弟组件（也就是非父子组件）之间传值  我们需要借助中间商---事件中心来完成数据通信
+-->
+
+<body>
+    <div class="app">
+        <div>{{msg}}</div>
+        <!-- 销毁事件 -->
+        <div>
+            <button @click="handle()">销毁事件</button>
+        </div>
+        <test-a></test-a>
+        <test-b></test-b>
+    </div>
+    <script>
+        // 创建事件中心
+        var hub = new Vue();
+        Vue.component('test-a', {
+            data: function () {
+                return {
+                    num: 0
+                }
+            },
+            template: `<div>
+                         <div>子组件A:{{num}}</div>
+                         <button @click="handle">点击改变B</button>
+                        </div>`,
+            methods: {
+                //点击按钮之后 触发handle这个事件，我们通过这个事件 去触发B的事件
+                // 第一个参数 为监听的事件的名称 ，第二个参数为 传递的参数
+                handle: function () {
+                    hub.$emit('b-event', 10)
+                }
+            },
+            // 这里我们需要借助生命周期的 mounted 处理监听事件（因为执行到mounted 说明组件已经可以使用了）
+            mounted: function () {
+                // 定义监听事件a，以及 要做的动作
+                hub.$on('a-event', val => {
+                    this.num += val;
+                })
+            }
+        })
+
+        // 事件B
+        Vue.component('test-b', {
+            data: function () {
+                return {
+                    num: 0
+                }
+            },
+            template: `<div>
+                         <div>子组件B:{{num}}</div>
+                         <button @click="handle">点击改变A</button>
+                        </div>`,
+            methods: {
+                //点击按钮之后 触发handle这个事件，我们通过这个事件 去监听a的事件
+                // 第一个参数 为监听的事件的名称 ，第二个参数为 传递的参数
+                handle: function () {
+                    // 执行a-event这个函数，传参为1
+                    hub.$emit('a-event', 1);
+                    // hub.$emit('b-event', 5);
+                }
+            },
+            mounted: function () {
+                // 定义监听事件B  以及要做的动作
+                hub.$on('b-event', val => {
+                    this.num += val;
+                })
+            }
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                msg: '这是父组件'
+            },
+            methods: {
+                handle: function () {
+                    // 关闭监听器a  此时 b就不能对a进行操作了
+                    hub.$off('a-event');
+                    hub.$off('b-event')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

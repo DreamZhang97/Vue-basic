@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div class="app">
+        <com1></com1>
+        <com2></com2>
+        <com3></com3>
+        <!-- 这样写 就报错了 -->
+        <!-- <test></test> -->
+    </div>
+
+    <script type="text/javascript">
+        /**
+         * 局部组件注册
+         * 局部组件注册***只能***在注册他的父组件中使用,在其他地方不能使用
+         */
+
+        Vue.component = ('test', function () {
+            template: '<div><com3></com3></div>'
+        })
+        var component01 = {
+            data: function () {
+                return {
+                    msg: '这是component01'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        }
+        var component02 = {
+            data: function () {
+                return {
+                    msg: '这是component02'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        }
+        var component03 = {
+            data: function () {
+                return {
+                    msg: '这是component03'
+                }
+            },
+            template: '<div>{{msg}}</div>'
+        }
+
+
+        const vue = new Vue({
+            el: '.app',
+            data: {
+
+            },
+            components: {
+                // 第一个为组件的名称  第二个为组件的内容函数名称
+                'com1': component01,
+                'com2': component02,
+                'com3': component03
+            }
+        })
+    </script>
+</body>
+
+</html>

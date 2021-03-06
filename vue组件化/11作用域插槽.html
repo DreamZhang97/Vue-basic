@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+<style>
+    .current {
+        color: coral;
+        font-size: 25px
+    }
+</style>
+
+<body>
+    <div class="app">
+        <!--  -->
+        <fruit-list :list="fruit">
+            <!--template  这个就是获取 <slot></slot> 这一行   
+            使用slot-scope这个属性 来接受 子组件<slot></slot> 它里面的所有内容  
+            也就是 slotProps 里面含有info 这个属性，而info 又绑定了item这个对象的信息
+            然后 再通过.info.name 获取到name
+            -->
+            <template slot-scope="slotProps">
+                <!-- 接下来我们就可以 设置 哪一个高亮 -->
+                <!-- 设置所有的偶数位置  高亮 -->
+                <strong v-if="(slotProps.info.id)%2==0" class="current">{{slotProps.info.name}}</strong>
+                <span v-else>{{slotProps.info.name}}</span>
+            </template>
+        </fruit-list>
+
+        <!-- 传统的方法 但是这样无法实现动态设置哪一个元素高亮 -->
+        <fruit-list :list="fruit"> </fruit-list>
+
+    </div>
+    <script>
+        Vue.component('fruit-list', {
+            props: ['list'],
+            // 如果这样写 就无法满足我们 具体需要哪一个元素进行高亮
+            // 因为我们可能在第二个进行高亮 或者第5个
+            // 因此我们应该满足 在父组件中去 设置第几个高亮
+            template: `
+                       <div>
+                         <ul>
+                            <li :key="item.id" v-for="item in list ">
+                                <slot v-bind:info="item"> {{item.name}}</slot>
+                            </li>
+                         </ul>
+                        </div>
+                     `
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                fruit: [
+                    {
+                        id: 1,
+                        name: 'apple'
+                    },
+                    {
+                        id: 2,
+                        name: 'orange'
+                    },
+                    {
+                        id: 3,
+                        name: 'pear'
+                    },
+                    {
+                        id: 4,
+                        name: 'lemon'
+                    }
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>

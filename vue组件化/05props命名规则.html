@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <!-- 父组件 向子组件传值 -->
+    <div class="app">
+        <div>{{pmsg}}</div>
+        <!--  属性名称为驼峰式的， 我们在这里写的话 需要将其变为拼接式的 -->
+        <menu-item my-title="你好 这是子组件的"></menu-item>
+        <!-- <div>你好 这是子组件的</div> 编译之后就为这样 -->
+
+        <!-- 将ptitle的值 传给了my-title -->
+        <menu-item :my-title="ptitle"></menu-item>
+
+        <!-- 如果这样写的话 就显示ptitle的内容 -->
+        <!-- <menu-item my-title="哈哈哈" :my-title="ptitle"></menu-item> -->
+        <!-- 这样就显示 哈哈哈 -->
+        <!-- <menu-item :my-title="ptitle" my-title="哈哈哈"></menu-item> -->
+
+
+    </div>
+    <script>
+        // 这个是子组件  
+        // 在这个子组件中 在引入另一个子组件
+        Vue.component('menu-item', {
+            props: ['MyTitle'],
+            // 在这个组件中引入 third-item 这个组件
+            // 翻译为html元素 就是在 div 中又嵌套了一个div
+            // 我们在这里也可以使用驼峰式 
+            // 驼峰式就在上面的html中不适用
+            template: '<div>{{MyTitle}} <third-item  testTitle="hello"> </third-item> </div>'
+        });
+        Vue.component('third-item', {
+            props: ['testTitle'],
+            template: '<div>{{testTitle}}</div>'
+        });
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                pmsg: '这是父组件的内容',
+                ptitle: "动态绑定属性"
+
+            }
+        })
+    </script>
+</body>
+
+</html>
