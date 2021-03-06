@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件绑定</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{num}}</div>
+        <div>
+            <button v-on:click="num++">原版{{num}}</button>
+            <!-- 简写形式 -->
+            <button @click="num++">简写{{num}}</button>
+            <!-- 函数形式 -->
+            <button @click="handle()">函数</button>
+            <!-- 当有参数的时候 必须得加括号，里面填写参数 -->
+            <!-- 当没有参数的时候  括号可加可不加 -->
+            <button @click="handle">函数2</button>
+
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        // 事件绑定
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                num: 0
+            },
+            // 事件函数
+            methods: {
+                handle: function () {
+                    // this指向vue对象
+                    console.log(this);
+                    this.num++;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

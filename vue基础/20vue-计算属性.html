@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div class="app">
+        {{msg}}</br>
+        <!-- 使用原生的js方法实现字符串反转 -->
+        <!-- 数组有一个反转的函数，可以将元素逆序 -->
+        {{msg.split('').reverse().join('')}}
+
+        <!-- 使用vue的 -->
+        <div>{{reverseString}}</div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                msg: '你好'
+            },
+            computed: {
+                reverseString: function () {
+                    return this.msg.split('').reverse().join('');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

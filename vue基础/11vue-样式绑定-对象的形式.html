@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .app {
+        width: 100px;
+        height: 100px;
+    }
+
+    .err {
+        background-color: brown;
+    }
+</style>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div class="box">
+        <div v-bind:class={app:isDisplay,err:isError}>哈哈哈
+        </div>
+        <button v-on:click="handle"> 点击切换</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '.box',
+            data: {
+                isDisplay: true,
+                isError: true
+            },
+            methods: {
+                handle: function () {
+                    // 这个取消了大小
+                    this.isDisplay = !this.isDisplay;
+                    // 这个取消背景颜色
+                    this.isError = !this.isError;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

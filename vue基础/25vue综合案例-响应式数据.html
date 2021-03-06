@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div class="app">
+        <div>
+            <ul>
+                <li v-for="item in list">{{item}}</li>
+            </ul>
+            {{info}}</br>
+            {{info.name}}</br>
+            {{info.age}}</br>
+            {{info.gender}}
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '.app',
+            data: {
+                list: ['apple', 'orange', 'pear', 'banana', 'strawberry'],
+                info: {
+                    name: '李四',
+                    age: 18
+                }
+            }
+        });
+        //这种写法 数据修改并不能立马响应到页面上  如果
+        // vm.list[0] = "里";
+
+        // 使用这两种方法可以 动态响应数据到前台
+        // vm.$set(vm.list, 2, '橘子');
+        Vue.set(vm.list, 0, "苹果");
+
+        // 对象
+        // 添加一条数据  但在控制台修改之后 页面属性值并不发生变化  说明不是响应式的
+        // vm.info.gender = 'male';
+
+        //    响应式的  我们在控制台中修改元素 对应的值也会发生改变
+        vm.$set(vm.info, 'age', 20);
+
+    </script>
+</body>
+
+</html>

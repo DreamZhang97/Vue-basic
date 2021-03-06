@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div class="app">
+        <form>
+            <!-- 点击backspace键或者delete键 进行内容清空 -->
+            <input type="text" name="username" v-model="username" @keyup.delete="clearAll"><br><br>
+            <!-- 点击enter 进行提交 -->
+            <input type="password" name="pwd" v-model="pwd" @keyup.enter="handleSubmit"><br><br>
+            <!-- 点击触发事件 -->
+            <input type="button" value="提交" v-on:click='handleSubmit'>
+        </form>
+    </div>
+    <script>
+        var vn = new Vue({
+            el: '.app',
+            // 使用v-module 可以实现数据同步
+            // v-model就是vue的双向绑定的指令，能将页面上控件输入的值同步更新到相关绑定的data属性，
+            // 也会在更新data绑定属性时候，更新页面上输入控件的值。
+            data: {
+                username: "",
+                pwd: ""
+            },
+            methods: {
+                clearAll: function () {
+                    this.username = ""
+                },
+                handleSubmit: function () {
+                    console.log(this.username, this.pwd);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

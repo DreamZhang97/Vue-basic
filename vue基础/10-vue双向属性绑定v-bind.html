@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div class="app">
+        {{msg}}
+        <!-- 设置输入框默认的值 -->
+        <!-- 如果我们想要修改其值,还得通过绑定函数进行实现 -->
+        <input type="text" v-bind:value="msg" v-on:input='handle'>
+        <!-- 不要函数的形式 -->
+        <input type="text" v-bind:value="msg" v-on:input='msg=$event.target.value'>
+        <!-- v-model底层的原理就是通过v-bind来实现 -->
+        <input type="text" v-model="msg">
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                msg: 'hello'
+            },
+            methods: {
+                handle: function (event) {
+                    // 让对象的msg等于事件对象的值
+                    this.msg = event.target.value;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

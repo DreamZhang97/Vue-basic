@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="app">
+        <h2>水果列表</h2>
+        <ul>
+            <li v-for='item in fruits'>{{item}}</li>
+        </ul>
+        <ul>
+            <li v-for="(item,index) in fruits">{{item}}----{{index}}</li>
+        </ul>
+        <ul>
+            <li v-for="item in myFruit">英文名称：{{item.ename}} 中文名称：{{item.cname}}</li>
+        </ul>
+        <ul>
+            <!-- :key 唯一标识符 帮助Vue区分不同的元素，从而提高性能 -->
+            <li :key='index' v-for="(item,index) in fruits">{{item}}----{{index}}</li>
+        </ul>
+        <!-- 我们也可以在对象中添加一个id字段 -->
+        <ul>
+            <li :key='item.id' v-for="item in myFruit">{{item.ename}} --{{item.cname}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                fruits: ['apple', 'pear', 'orange'],
+                // 数组中存储对象的形式
+                myFruit: [
+                    {
+                        id: 112,
+                        ename: 'apple',
+                        cname: '苹果'
+                    },
+                    {
+                        id: 113,
+                        ename: 'orange',
+                        cname: '橘子'
+                    }, {
+                        id: 180,
+                        ename: 'pear',
+                        cname: '梨'
+                    }
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>

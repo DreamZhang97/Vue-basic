@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 自动获取焦点 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div id="app">
+        <!-- <input type="text" v-color="msg"> -->
+        <input type="text" v-color="mess">
+        <input type="text" v-focus="">
+    </div>
+    <script>
+        /**
+         * 自定义指令-带参数
+         */
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello',
+                mess: {
+                    color: 'orange'
+                }
+            },
+            methods: {
+                handle: function () {
+
+                }
+            },
+            // 局部指令
+            directives: {
+                // 第一个为指令的名称  第二个为指令的动作
+                color: {
+                    // el就是执行指令的那个元素  binding里面存储了元素的属性值
+                    bind: function (el, binding) {
+                        console.log(binding);
+                        // 修改属性值
+                        el.style.backgroundColor = binding.value.color;
+                    }
+                },
+                focus: {
+                    // inserted: function (el, binding) {
+                    inserted: (el) => {
+                        console.log(el);
+                        el.focus();
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

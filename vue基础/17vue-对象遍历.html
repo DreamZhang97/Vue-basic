@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="app">
+        <ul>
+            <!--第一个为值  2为键  3为索引 这三个的顺序不能更改  但是名称可以 -->
+            <li v-for="(value,key,index) in obj ">{{value}}----{{key}}----{{index}}</li>
+        </ul>
+        <ul>
+            <!--第一个为值  2为键  3为索引 这三个的顺序不能更改  但是名称可以 -->
+            <li v-for="(v,k,i) in obj ">{{v}}----{{k}}----{{i}}</li>
+        </ul>
+        <!-- 对象和for合用 -->
+        <ul>
+            <!--筛选出值为18的那一条数据 -->
+            <li v-if="value==18" v-for="(value,key,index) in obj ">{{value}}----{{key}}----{{index}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const obj = {
+            name: 'lisi',
+            age: 18,
+            gender: 'male'
+        }
+        // 遍历对象的属性 以及值
+        for (let key in obj) {
+            console.log(key, obj[key]);
+        }
+
+        const vue = new Vue({
+            el: '.app',
+            data: {
+                obj: {
+                    name: 'lisi',
+                    age: 18,
+                    gender: 'male'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

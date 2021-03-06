@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>this指向Vue对象</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div id="app" style="width: 100%;height: auto;font-size:20px;">
+        <!-- 这个输出 Hello！ -->
+        <p id="id1"></p>
+        <!-- 这个输出  你好！ -->
+        <p id="id2"></p>
+    </div>
+    <script type="text/javascript">
+        // 全局变量
+        var message = "Hello!";
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: "你好！"
+            },
+            created: function () {
+                this.showMessage1();    //this 1
+                this.showMessage2();   //this 2
+            },
+            methods: {
+                showMessage1: function () {
+                    // 对于普通函数 包括（匿名函数）setTimeout 
+                    // 在非严格模式下，如果没有直接调用者，this指的是window。
+                    // 因此 这里的message 就为hello
+                    setTimeout(function () {
+                        document.getElementById("id1").innerText = this.message;  //this 3
+                    }, 10)
+                },
+                showMessage2: function () {
+                    // 箭头函数没有自己的this，他的this是继承过来的，在它内部使用的this是由它定义的宿主对象决定。
+                    // 箭头函数的this指向父级元素 setTimeout，setTimeout 这一级的this 指向Vue实例
+                    // showMessage2()里定义的箭头函数宿主对象为vue实例，所以它里面使用的this指向vue实例。
+                    setTimeout(() => {
+                        document.getElementById("id2").innerText = this.message;  //this 4
+                    }, 10)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

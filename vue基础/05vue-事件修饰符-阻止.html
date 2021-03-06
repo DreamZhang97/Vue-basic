@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{num}}</div>
+        <div @click='handle0'>
+            <!-- .stop 阻止冒泡，意思就是点击这个按钮 不会触发上一级的函数 -->
+            <button v-on:click.stop="handle1">按钮1</button>
+        </div>
+        <div>
+            <!-- 阻止默认连接跳转 -->
+            <!-- <a href="http://www.baidu.com" @click="handle2($event)">百度</a> -->
+            <!-- 使用事件修饰符 阻止默认行为 -->
+            <a href="http://www.baidu.com" @click.prevent="">百度</a>
+
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                num: 0
+            },
+            methods: {
+                handle0: function () {
+                    this.num++;
+                },
+                handle1: function (event) {
+                    // 当我们点击按钮时，因为按钮在div容器里面的，因此handle0这个函数也会被触发
+                    // 这种现象就叫冒泡
+                    //阻止冒泡  这个是常规的写法  我们也可以通过.stop阻止
+                    // event.stopPropagation();
+                    // 使用这个之后，阻止冒泡 当点击按钮时 数字并不会变化
+                },
+                handle2: function (event) {
+                    // 阻止默认行为
+                    event.preventDefault();
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>

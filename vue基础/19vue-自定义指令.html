@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 自动获取焦点 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div id="app">
+        <input type="text" name="" id="">
+        <!-- 添加v-focus 自动获取焦点 -->
+        <input type="text" name="" v-focus>
+    </div>
+    <script>
+        // 对于全局的自定义属性 我们需要使用Vue.directive
+        // 如果是局部的自定义属性 我们就需要 directives
+        //  第一个参数为指令的名称 第二个参数为 该指令所要执行的行为
+
+        // Vue.directive('focus', {
+        //     // 获取元素的焦点
+        //     inserted: function (el) {
+        //         el.focus();
+        //     }
+        // })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            directives: {
+                focus: {
+                    inserted: function (el) {
+                        el.focus();
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

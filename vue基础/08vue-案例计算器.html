@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div class="app">
+        <form action="">
+            数值A：<input type="text" name="paramA" v-model="paramA" id=""><br>
+            数值B：<input type="text" name="paramB" v-model="paramB" id=""><br>
+            <input type="button" value="计算" @click="sum()"><br>
+            计算结果为：{{result}}
+        </form>
+    </div>
+    <script>
+        const vue = new Vue({
+            el: '.app',
+            data: {
+                paramA: "",
+                paramB: "",
+                result: ""
+            },
+            methods: {
+                sum: function () {
+                    // console.log(this);
+                    //    实现计算结果
+                    this.result = Number(this.paramA) + Number(this.paramB);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

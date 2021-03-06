@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // const obj = {
+        //     aaa() {
+        //         console.log(this); //这个this 就指向obj
+        //     }
+        // }
+        // obj.aaa();
+        const obj = {
+            aaa() {
+                console.log(this);
+                setTimeout(function () {
+                    //window  因为调用function的为setTimeOut 调用setTimeout 为winodw
+                    // 换句话说 function 如果没有直接的调用者 this就指向window
+                    console.log(this);
+
+                    setTimeout(function () {
+                        // window
+                        console.log(this);
+                    });
+
+                    setTimeout(() => {
+                        // 箭头函数 找this，需要向其父级元素看，如果没有 就再往上一层寻找
+                        // 找到setTimeout ， setTimeout的父级元素为 31行 这一层的this指向，跟25行this是同一个，因为他俩位于同一层 是位于函数中的
+                        // 因为函数没有直接调用者，因此this就指向window
+                        console.log(this);
+                    });
+                });
+
+                setTimeout(() => {
+                    console.log(this);  //window
+                    setTimeout(function () {
+                        // window
+                        console.log(this);
+                    });
+                    setTimeout(() => {
+                        // 箭头函数找父级元素 到 setTimeout 这一层，这一层又是箭头函数，接着再找 37行这一层
+                        // 37行这一层 this指向 obj这个对象
+                        console.log(this);
+                    });
+                })
+            }
+        }
+        obj.aaa();
+    </script>
+</body>
+
+</html>

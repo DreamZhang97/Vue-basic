@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .active {
+        width: 100px;
+        height: 100px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .error {
+        background-color: cyan;
+    }
+
+    .test {
+        color: fuchsia
+    }
+
+    .base {
+        width: 200px;
+        background-color: gold;
+    }
+</style>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div id="app">
+        <!-- 如果这两个样式都显示 默认的就是后面的属性覆盖前面的 -->
+        <div v-bind:class='[activeClass,errorClass,{test:isTest}]'>测试样式</div>
+        <!-- 简化操作 数组 -->
+        <div v-bind:class="arrClass">简化数组形式的操作</div>
+        <!-- 简化操作 对象 -->
+        <div v-bind:class="objClass">简化对象形式的操作</div>
+        <div class="base" v-bind:class="arrClass"></div>
+        <button @click="change">切换</button>
+    </div>
+    <script>
+        /**
+         * 样式绑定相关语法细节
+         * 1、对象绑定和数组绑定可以结合使用
+         * 2、class绑定的值可以简化操作
+         *      数组形式简化 对象形式简化
+         * 3、默认的class如何处理
+         *      默认的class不会被覆盖 而且默认的class权限高
+         */
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                activeClass: 'active',
+                errorClass: 'error',
+                isTest: true,
+                objClass: {
+                    active: true,
+                    error: true
+                },
+                arrClass: ['active', 'error']
+            },
+            methods: {
+                change: function () {
+                    this.isTest = !this.isTest;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

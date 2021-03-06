@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件绑定-传递参数</title>
+
+</head>
+
+<body>
+    <div id="container">
+        <div>{{name}}</div>
+        <div>
+            <!-- $event 固定写法 返回调用的对象 -->
+            <button @click="print(2,3,$event)">输出1</button>
+            <button @click="print">2输出</button>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: '#container',
+            data: {
+                name: 'zjh'
+            },
+            methods: {
+                // 
+                print: function (p1, p2, event) {
+                    console.log(1111111);
+                    console.log(p1, p2);
+                    // <button> 2输出</button >
+                    console.log(event.target);
+                    // BUTTON
+                    console.log(event.target.tagName);
+                    // 输出1
+                    console.log(event.target.innerHTML);
+                },
+                print2: function () {
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

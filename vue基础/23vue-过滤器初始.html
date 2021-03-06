@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div class="app">
+        <input type="text" v-model="uname">
+        <!-- uname经过upper过滤器 -->
+        {{uname|upper}}
+        {{uname | upper | lower }}
+        <div :class="uname|upper">测试数据{{uname| upper}}</div>
+
+    </div>
+    <!-- 使用过滤器 将输入框的内容变为首字母大写 -->
+    <script>
+        // 我们也可以在vue实例中写入
+        // 函数的参数就是我们所要过滤的对象（或者值）
+        // Vue.filter('upper', function (val) {
+        //     // 将首字母变为大写+截取字符串（从第1位置）
+        //     return val.charAt(0).toUpperCase() + val.slice(1);
+        // });
+        Vue.filter('lower', (val) => {
+            //   将第四个字符转换为小写  前提是在上一个过滤器的基础之上 
+            return val.slice(0, 3) + val.charAt(3).toLowerCase() + val.slice(4);
+        })
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                uname: ""
+            },
+            filters: {
+                upper: (val) => {
+                    return val.charAt(0).toUpperCase() + val.slice(1);
+                }
+            }
+        })
+    </script>
+
+    <script>
+        var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        var arr2 = arr.filter((value) => {
+            return value % 2 == 0;
+        });
+        console.log(arr2)
+    </script>
+</body>
+
+</html>

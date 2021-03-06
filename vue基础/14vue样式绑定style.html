@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div class="box">
+        <!-- 以对象的形式  当属性很多时 这样看起来就不易改了 -->
+        <div v-bind:style="{border:borderStyle,width:widthStyle,height:heightStyle}"></div>
+        <div v-bind:style="objStyle"></div>
+        <div v-bind:style="[objStyle,override]"></div>
+        <button @click="change()">切换</button>
+
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '.box',
+            data: {
+                borderStyle: '1px solid #000',
+                widthStyle: '200px',
+                heightStyle: '100px',
+                objStyle: {
+                    border: "1px solid green",
+                    width: "100px",
+                    height: "200px"
+                },
+                override: {
+                    border: '1px dashed yellow',
+                    width: "150px",
+                    background: 'red'
+                }
+            },
+            methods: {
+                change: function () {
+                    this.widthStyle = "100px";
+                    this.objStyle.height = "100px"
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

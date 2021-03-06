@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="js/vue.js"></script>
+
+<body>
+    <div id="container">
+        <form action="">
+            <!-- 当按下a时，触发函数 -->
+            <!-- <input type="text" @keyup.65="info"> -->
+            <input type="text" @keyup.a="info">
+
+        </form>
+    </div>
+
+    <script>
+        // 自定义按键修饰符
+        Vue.config.keyCodes.a = 65;
+        var vue = new Vue({
+            el: '#container',
+            data: {
+                // inputValue: ''
+            },
+            methods: {
+                info: function (event) {
+                    console.log("按下了a键");
+                    // console.log(event.keyCode);  keyCode可以得出键盘每个键码
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

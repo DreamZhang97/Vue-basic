@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .class1 {
+        background: #444;
+        color: #eee;
+    }
+</style>
+
+<body>
+    <script src="js/vue.js"></script>
+
+    <div class="container">
+        {{msg}}
+        <div>
+            <!-- 引入vue对象的msg属性 -->
+            <input type="text" v-model='msg'>
+        </div>
+    </div>
+
+    <div id="app">
+        <!-- v-html 用于插入html元素 -->
+        <div v-html="message"></div>
+    </div>
+
+    <script>
+        var vue = new Vue({
+            el: '.container',
+            data: {
+                msg: "hello Vue"
+            }
+        });
+        new Vue({
+            el: '#app',
+            data: {
+                message: '<h1>V-html演示</h1>'
+            }
+        })
+    </script>
+
+    <div id="box">
+        <label for="r1">修改颜色</label><input type="checkbox" id="r1">
+        <br><br>
+        <!-- v-bind 动态表达式 动态修改数据
+          它的值 只能为true false（及时 你使用其他类型的数据）
+           就在false 和true上进行变动 -->
+        <div v-bind:class="{'class1': use}">
+            {{use}} v-bind:class 指令
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#box',
+            data: {
+                use: false,
+            }
+        });
+    </script>
+
+</body>
+
+</html>

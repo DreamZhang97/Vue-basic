@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 自动获取焦点 -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="js/vue.js"></script>
+    <div id="app">
+        <!-- <input type="text" v-color="msg"> -->
+        <input type="text" v-color="mess">
+
+    </div>
+    <script>
+        /**
+         * 自定义指令-带参数
+         */
+        Vue.directive('color', {
+            // binging 就包含了参数的属性值
+            bind: function (el, binding) {
+                // 这个el=color
+                console.log(binding);
+
+                // hello 如果是value对象的形式  输出的也是对象
+                console.log(binding.value);
+                // 如果在输出对象中的属性
+                console.log(binding.value.color);
+                // 修改属性值
+                el.style.backgroundColor = binding.value.color;
+            }
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello',
+                mess: {
+                    color: 'orange'
+                }
+            },
+            methods: {
+                handle: function () {
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
